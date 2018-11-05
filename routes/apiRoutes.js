@@ -45,15 +45,7 @@ module.exports = function(app) {
     // query database to add submitted notes into the saved notes list
     db.query("SELECT * FROM tables WHERE allNotes = false", (err, tableData) => {
 
-      if (tableData.length < 5) {
-        noteData.allNotes = false;
-      } 
-      else {
-        noteData.allNotes = true;
-      }
-    
-      // insert note into "notes" table
-      db.query("INSERT INTO tables SET ?", noteData, (err, insertResponse) => {
+      db.query("INSERT INTO tables SET ?", noteData, (err, noteData) => {
 
         if (err) {
           console.log(err);
