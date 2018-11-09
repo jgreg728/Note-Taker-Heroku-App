@@ -3,7 +3,7 @@ const express = require("express");
 
 // set up express app & PORT
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // set up express middleware to handle incoming data (POST data)
 app.use(express.urlencoded({extended: true}));
