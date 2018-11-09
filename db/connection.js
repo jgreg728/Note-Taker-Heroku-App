@@ -15,7 +15,7 @@ connection.connect(err => {
   if (err) throw err;
   console.log(`Connected on ${connection.threadId}`);
 
-  startNotes();
+  // startNotes();
 });
 
 module.exports = connection;
