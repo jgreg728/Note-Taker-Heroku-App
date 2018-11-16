@@ -7,11 +7,11 @@ module.exports = function(app) {
   // set up GET route to serve home page
   app.get("/", function(req, res) {
     // send home page back to client
-    res.sendFile(path.join(__dirname, "../public/index.html"));
+    res.sendFile(path.join(__dirname, "../public/index"));
   });
 
   // set up POST route for submitting new notes
   app.post("/submitnotes", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/notes.html"));
+    res.sendFile(path.join(__dirname, "../public/notes"));
   });
 }
