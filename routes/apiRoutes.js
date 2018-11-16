@@ -1,5 +1,7 @@
+// 
+// 
 // import database connection from db folder
-const db = require("../db/connection");
+const db = require("../db/connection.js");
 
 // export function that creates routes (will be imported/executed in server.js)
 module.exports = function(app) {
