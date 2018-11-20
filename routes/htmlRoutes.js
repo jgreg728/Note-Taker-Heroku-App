@@ -14,4 +14,9 @@ module.exports = function(app) {
   app.post("/submitnotes", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/notes.html"));
   });
+
+  app.get("/notes",function(req, res) {
+    // send home page back to client
+    res.sendFile(path.join(__dirname, "../public/notes.html"));
+  });
 }

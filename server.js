@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 // set up express middleware to handle incoming data (POST data)
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(express.static('public'));
 
 require("./routes/htmlRoutes")(app);
 require("./routes/apiRoutes")(app);

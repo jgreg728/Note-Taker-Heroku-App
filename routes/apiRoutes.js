@@ -9,45 +9,44 @@ module.exports = function(app) {
   // GET route that finds all tables with allNotes = false and sends back as JSON
   app.get("/api/notes", function(req, res) {
 
-    db.query("SELECT * FROM tables WHERE allNotes = false", (err, tableData) => {
+    db.query("SELECT * FROM notes WHERE allNotes = false", (err, tableData) => {
 
       if (err) {
         console.log(err);
         return res.status(500).end();
       }
-      // send array of tables back
+      // send array of notes back
       res.json(tableData);
-
     });
 
   });
 
-  // GET route that finds all tables with allNotes = true and sends back as JSON
-  app.get("/api/allnotes", function (req, res) {
+  // GET route that finds all notes with allNotes = true and sends back as JSON
+  // app.get("/api/allnotes", function (req, res) {
 
-    db.query("SELECT * FROM tables WHERE allNotes = true", (err, tableData) => {
+  //   db.query("SELECT * FROM notes WHERE allNotes = true", (err, tableData) => {
 
-      if (err) {
-        console.log(err);
-        return res.status(500).end();
-      }
-      // send array of tables back
-      res.json(tableData);
+  //     if (err) {
+  //       console.log(err);
+  //       return res.status(500).end();
+  //     }
+  //     // send array of tables back
+  //     res.json(tableData);
 
-    });
+  //   });
 
-  });
+  // });
 
   // POST route that takes in data from client (in req.body) and inserts into database
-  app.post("/api/newnote", function(req, res) {
+  app.post("/api/notes", function(req, res) {
 
     // get post data from req.body
     const noteData = req.body;
 
     // query database to add submitted notes into the saved notes list
-    db.query("SELECT * FROM tables WHERE allNotes = false", (err, tableData) => {
+    db.query("SELECT * FROM notes WHERE allNotes = false", (err, tableData) => {
 
-      db.query("INSERT INTO tables SET ?", noteData, (err, noteData) => {
+      db.query("INSERT INTO notes SET ?", noteData, (err, noteData) => {
 
         if (err) {
           console.log(err);
