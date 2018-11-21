@@ -9,7 +9,7 @@ module.exports = function(app) {
   // GET route that finds all tables with allNotes = false and sends back as JSON
   app.get("/api/notes", function(req, res) {
 
-    db.query("SELECT * FROM notes WHERE allNotes = false", (err, tableData) => {
+    db.query("SELECT * FROM notes", (err, tableData) => {
 
       if (err) {
         console.log(err);
@@ -44,7 +44,7 @@ module.exports = function(app) {
     const noteData = req.body;
 
     // query database to add submitted notes into the saved notes list
-    db.query("SELECT * FROM notes WHERE allNotes = false", (err, tableData) => {
+    db.query("SELECT * FROM notes", (err, tableData) => {
 
       db.query("INSERT INTO notes SET ?", noteData, (err, noteData) => {
 
@@ -58,4 +58,24 @@ module.exports = function(app) {
       });
     });
   });
+  
+  // DELETE route
+  app.delete("/api/notes/:id", function(req, res) {
+    // // get post data from req.body
+    const deleteId = req.params.id;
+    console.log("look here", deleteId);
+    // query database to delete submitted notes
+    db.query("SELECT * FROM notes", (err, tableData) => {
+
+      db.query("DELETE FROM notes WHERE id = ?", deleteId, (err, deleteId) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).end();
+        }
+        res.json(deleteId)
+      });
+    });
+  });
+
+
 }

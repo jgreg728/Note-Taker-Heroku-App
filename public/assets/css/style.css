@@ -2,3 +2,11 @@ body {
   background-image: url('/assets/images/white-paper.jpg');
   background-size: auto;
 }
+
+.jumbotron {
+  background: white;
+}
+
+.titleDiv {
+  font-style: bold;
+}

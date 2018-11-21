@@ -8,10 +8,10 @@ const submitClick = function (event) {
 
   // Get note info from the form
   var newNote = {
-    title: $(".title-content").val().trim(),
-    note: $(".note-content").val().trim(),
+    title: $(".note-title").val().trim(),
+    note: $(".note-textarea").val().trim(),
   };
-
+  console.log(newNote)
   // POST the note to "/api.notes"
   $.ajax({
     url: "/api/notes",
@@ -26,6 +26,9 @@ const submitClick = function (event) {
     // Clear the form after submitting
     $(".title-content").val("");
     $(".note-content").val("");
+
+    // call shownotes
+    showNotes();
   }
   );
 };
@@ -34,44 +37,62 @@ const submitClick = function (event) {
 $submitBtn.on("click", submitClick);
 
 
-// GET the note from "/api.notes"
-const showNotes = function (event) {
-  event.preventDefault();
-
-  var submittedNote = {
-    title: $(".list-group-item").val().trim(),
-    note: $(".list-group-item").val().trim(),
-  };
+// GET the note from "/api.notes" to show submitted notes
+const showNotes = function () {
+  // event.preventDefault();
+  $(".submitted-notes").empty();
+  // var submittedNote = {
+  //   title: $(".list-group-item").val().trim(),
+  //   note: $(".list-group-item").val().trim(),
+  // };
 
   // GET submitted notes saved to "/api.notes"
     $.ajax({
     url: "/api/notes",
     method: "GET",
-    data: submittedNote
   }).then(function(data) {
-    // Alert user when note has been saved
     if (data) {
       console.log(data)
+
+      for (var i = 0; i < data.length; i++) {
+        var note = data[i];
+        
+        var listItem = $("<li class='list-group-item'>");
+        
+        var listItemDetail = $("<div>");
+        
+        var titleDiv = $("<p class = 'titleDiv'>");
+        titleDiv.text(note.title);
+        var noteDiv = $("<p>");
+        noteDiv.text(note.note);
+        var deleteButton = $(`<button id=${note.id} class='btn btn-danger float-top-right deleteNote'><i class='fa fa-trash fa-sm'>`);
+        deleteButton.button();
+        
+        listItemDetail.append(titleDiv).append(noteDiv).append(deleteButton);
+        listItem.append(listItemDetail);
+
+
+        $(".submitted-notes").append(listItem);
+
+      }
     }
   });
 }
 
-// Run showNotes whenever the form is submitted
-// $submitBtn.on("click", showNotes);
-
-
 // BUTTON TO DELETE NOTE
-const $clearBtn = $(".deleteNote");
 
-var clearNote = function () {
+var clearNote = function() {
+  console.log("Hello", $(this).attr("id"));
+
   $.ajax({
-    url: "/api/notes",
-    method: "DELETE"
-  }).then(function() {
-    $("#noteList").empty();
-    console.log("Note deleted.");
+    url: "/api/notes/" + $(this).attr("id"),
+    method: "DELETE",
+  }).then(function(data) {
+   location.reload();
   });
 };
 
-$clearBtn.on("click", clearNote);
+$(document).on("click", ".deleteNote", clearNote);
 
+
+showNotes();
