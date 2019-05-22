@@ -21,22 +21,6 @@ module.exports = function(app) {
 
   });
 
-  // GET route that finds all notes with allNotes = true and sends back as JSON
-  // app.get("/api/allnotes", function (req, res) {
-
-  //   db.query("SELECT * FROM notes WHERE allNotes = true", (err, tableData) => {
-
-  //     if (err) {
-  //       console.log(err);
-  //       return res.status(500).end();
-  //     }
-  //     // send array of tables back
-  //     res.json(tableData);
-
-  //   });
-
-  // });
-
   // POST route that takes in data from client (in req.body) and inserts into database
   app.post("/api/notes", function(req, res) {
 
